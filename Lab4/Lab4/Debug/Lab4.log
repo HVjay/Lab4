@@ -1,0 +1,4 @@
+﻿  lab4_binary_search_tree.cpp
+c:\users\harri\desktop\bme 1b\bme 122- data structures and algorithms\labs\lab4\lab4\lab4\lab4_binary_search_tree.cpp(257): warning C4715: 'BinarySearchTree::find_parent': not all control paths return a value
+c:\users\harri\desktop\bme 1b\bme 122- data structures and algorithms\labs\lab4\lab4\lab4\lab4_binary_search_tree.cpp(340): warning C4715: 'BinarySearchTree::remove_cases': not all control paths return a value
+  Lab4.vcxproj -> C:\Users\harri\Desktop\BME 1B\BME 122- Data Structures and Algorithms\Labs\Lab4\Lab4\Debug\Lab4.exe
