@@ -1,3 +1,9 @@
+/*
+Harris Vijayagopal- 20775920
+Surya Pandiaraju - 20783404
+Tyler Pinto - 20762174
+*/
+
 #include <iostream>
 #include "lab4_binary_search_tree.hpp"
 
@@ -5,7 +11,9 @@ using namespace std;
 
 // PURPOSE: Default/empty constructor
 BinarySearchTree::BinarySearchTree() {
+	// setting size to 0
 	size = 0;
+	// root must be NULL
 	root = NULL;
 }
 
@@ -16,6 +24,7 @@ void BinarySearchTree::Destructor_Helper(TaskItem *node) {
 		Destructor_Helper(node->right);
 		delete node;
 		node = NULL;
+		// decrement size
 		size--;
 	}
 }
@@ -50,8 +59,8 @@ BinarySearchTree::TaskItem BinarySearchTree::max() const {
 //min val is the very left node
 BinarySearchTree::TaskItem BinarySearchTree::min() const {
 	TaskItem* temp = root;
-	if(!root)
-	return BinarySearchTree::TaskItem(-1, "N/A");
+	if (!root)
+		return BinarySearchTree::TaskItem(-1, "N/A");
 	while (temp->left)
 		temp = temp->left;
 	//cout << temp->priority << endl;
@@ -59,11 +68,10 @@ BinarySearchTree::TaskItem BinarySearchTree::min() const {
 }
 
 // PURPOSE: Returns the tree height
-
-//idk i googled it this is what came up
 unsigned int BinarySearchTree::height()
 {
-	return getHeight(root)-1;
+	// Returns height of root (number of edges). Equal to longest path of nodes - 1
+	return getHeight(root) - 1;
 }
 
 unsigned int BinarySearchTree::getHeight(BinarySearchTree::TaskItem *node)
@@ -72,9 +80,11 @@ unsigned int BinarySearchTree::getHeight(BinarySearchTree::TaskItem *node)
 		return 0;
 	}
 
+	// recursively trying to find the longest path from passed node to bottom of tree
 	unsigned int lh = getHeight(node->left);
 	unsigned int rh = getHeight(node->right);
 
+	// Finds maximum path
 	return 1 + helper_max(lh, rh);
 }
 
@@ -85,6 +95,7 @@ unsigned int BinarySearchTree::helper_max(unsigned int a, unsigned int b)
 }
 
 
+// Recursive helper function to print values of the brain inOrder
 void BinarySearchTree::inorder(TaskItem * node) const
 {
 	if (node != NULL) {
@@ -100,18 +111,16 @@ void BinarySearchTree::print() const {
 }
 
 
-
-
 // PURPOSE: Returns true if a node with the value val exists in the tree	
 // otherwise, returns false
-bool BinarySearchTree::exists( BinarySearchTree::TaskItem val ) const {
+bool BinarySearchTree::exists(BinarySearchTree::TaskItem val) const {
 	//empty tree
 	if (!root)
 		return false;
 	else if (root->priority == val.priority)
 		return true;
 	TaskItem* temp = root;
-	while(temp){
+	while (temp) {
 		if (temp->priority == val.priority)
 			return true;
 		//compare nodes and move temp accordingly 
@@ -119,7 +128,7 @@ bool BinarySearchTree::exists( BinarySearchTree::TaskItem val ) const {
 			temp = temp->left;
 		else
 			temp = temp->right;
-		}
+	}
 	return false;
 }
 
@@ -136,14 +145,14 @@ BinarySearchTree::TaskItem** BinarySearchTree::get_root_node_address() {
 }
 
 // PURPOSE: Optional helper function that gets the maximum depth for a given node
-int BinarySearchTree::get_node_depth( BinarySearchTree::TaskItem* n ) const {
+int BinarySearchTree::get_node_depth(BinarySearchTree::TaskItem* n) const {
 	return 0;
 }
 
 
 // PURPOSE: Inserts the value val into the tree if it is unique
 // returns true if successful; returns false if val already exists
-bool BinarySearchTree::insert( BinarySearchTree::TaskItem val ) {
+bool BinarySearchTree::insert(BinarySearchTree::TaskItem val) {
 	if (exists(val) == true)
 		return false;
 	//empty true
@@ -156,7 +165,7 @@ bool BinarySearchTree::insert( BinarySearchTree::TaskItem val ) {
 	}
 
 	TaskItem* temp = root;
-	//iterate through the tree until finding the correct node to insert too
+	//iterate through the tree until finding the correct node to insert to
 	while (temp) {
 		if (temp->priority > val.priority && (temp->left == NULL)) {
 			temp->left = new TaskItem(val);
@@ -201,7 +210,7 @@ bool BinarySearchTree::remove_cases_2(TaskItem* node) {
 				return true;
 			}
 
-			else if(node->right) {
+			else if (node->right) {
 				temp->left = node->right;
 				delete node;
 				size--;
@@ -218,7 +227,7 @@ bool BinarySearchTree::remove_cases_2(TaskItem* node) {
 				size--;
 				return true;
 			}
-			else if(node->right){
+			else if (node->right) {
 				temp->right = node->right;
 				delete node;
 				node = NULL;
@@ -242,7 +251,7 @@ bool BinarySearchTree::remove_cases_2(TaskItem* node) {
 BinarySearchTree::TaskItem* BinarySearchTree::find_parent(TaskItem* node) {
 	TaskItem* temp = root;
 	while (temp) {
-		if (temp->left == node || temp->right==node)
+		if (temp->left == node || temp->right == node)
 			return temp;
 		else if (temp->priority > node->priority) {
 			temp = temp->left;
@@ -285,7 +294,7 @@ bool BinarySearchTree::remove_cases(TaskItem* node) {
 
 	//case 2: non-leaf, with one child
 	else if ((node->left == NULL && node->right != NULL) || (node->right == NULL && node->left != NULL)) {
-		
+
 		//if the one to be removed is the root, the child node is now the new root
 		if (node == root) {
 			if (node->right) {
@@ -293,12 +302,12 @@ bool BinarySearchTree::remove_cases(TaskItem* node) {
 				size--;
 				return true;
 			}
-			else if(node->left){
+			else if (node->left) {
 				root = node->left;
 				size--;
 				return true;
 			}
-				
+
 		}
 		else {
 			//helper function to find parent of the one to be removed
@@ -336,12 +345,12 @@ bool BinarySearchTree::remove_cases(TaskItem* node) {
 	}
 }
 
-bool BinarySearchTree::remove( BinarySearchTree::TaskItem val ) {
+bool BinarySearchTree::remove(BinarySearchTree::TaskItem val) {
 	if (!root)
 		return false;
 	else if (!exists(val))
 		return false;
-	else{
+	else {
 		TaskItem* temp = root;
 		//finds node to be removed
 		while (temp) {
@@ -357,6 +366,5 @@ bool BinarySearchTree::remove( BinarySearchTree::TaskItem val ) {
 		}
 		return false;
 	}
-   
-}
 
+}
