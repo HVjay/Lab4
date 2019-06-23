@@ -1,9 +1,3 @@
-/*
-Harris Vijayagopal- 20775920
-Surya Pandiaraju - 20783404
-Tyler Pinto - 20762174
-*/
-
 #include <iostream>
 #include "lab4_binary_search_tree.hpp"
 
